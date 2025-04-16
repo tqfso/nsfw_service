@@ -1,7 +1,6 @@
 import os
 import torch
-import error
-from error import Error
+from error import Error,Code
 from PIL import Image
 from transformers import AutoModelForImageClassification, ViTImageProcessor
 
@@ -32,7 +31,7 @@ class Model:
         '''
                 
         if os.path.exists(filename) == False:
-            raise Error(error.FILE_NOT_FOUND, f"file not found:{filename}")
+            raise Error(Code.FILE_NOT_FOUND, "file not found")
         
         img = Image.open(filename)
         with torch.no_grad():            

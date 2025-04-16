@@ -1,11 +1,11 @@
 
-SUCCESS = 0
-FAILURE = 1
-UNKNOWN = 2
-FILE_NOT_FOUND = 3
+class Code:
+    SUCCESS = 0
+    FAILURE = 1
+    UNKNOWN = 2
+    FILE_NOT_FOUND = 3
 
 class Error(Exception):
-
     def __init__(self, code = 0, msg = None):
         super().__init__()
         self._code = code
