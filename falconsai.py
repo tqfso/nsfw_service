@@ -1,5 +1,4 @@
 import os
-from error import Error,Code
 from PIL import Image
 from transformers import pipeline
 
@@ -27,9 +26,6 @@ class Model:
         '''
         The NSFW score is returned after inference based on the picture path. A negative number indicates inference failure
         '''
-                
-        if os.path.exists(filename) == False:
-            raise Error(Code.FILE_NOT_FOUND, "file not found")
         
         img = Image.open(filename)
 
