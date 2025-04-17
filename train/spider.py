@@ -4,8 +4,10 @@ import re
 import os
 import sys
 
+print(os.getcwd())
+
 host = 'https://wallhaven.cc/search'
-spider_path = "../data"
+spider_path = "data"
 current_page = 2
 final_page = 1000
 
@@ -14,7 +16,7 @@ if len(sys.argv) >= 2:
 
 headers = {
     'accept': 'text/html, */*; q=0.01',
-    'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
+    'cookie': 'remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImtxZVpnQlQ5MjV5N3pGbXNocVIwZGc9PSIsInZhbHVlIjoibkg1QXpSVyttR1BES1kyTFE4T1IxVUpwU0M3YURwc0E4UnAyd1ZpZFg4SW1kUkQ0VFwvbkQ4SXR2RWFVRVhtZmRTMER4b1MxY3Q2WHZHeUZMSlVZSjliMFNzSVY4eStSYWs5RTJrZm0zTXJBZXVleUN6MTc2dTNqNHM0blFIXC9LNTBUbDhvaERLT2tCZkQ1Y0xZTWI3ZUVVdGxjNTlJT0VtQWN3SGpjaEZhbnM9IiwibWFjIjoiMGZlNTA5ZjA2MjA3NzU5NjEzZGVjM2YyY2NiNmNkZTkwMDVmMDYwY2VlZjk4MmY3ZmRmZjcyNmRlMTY2NGIwMCJ9; _pk_id.1.01b8=c6a37b55ce63dc75.1636800243.; XSRF-TOKEN=eyJpdiI6IkZGcXpQTmtab1wvQlB5NWpxYXgybTZnPT0iLCJ2YWx1ZSI6IjllQ0F5aG45TzhrRzc2bGFBUGptNlZKUUpFYlQwbnZINmZaTDFvXC9zcFNyUEx3Wm14cEMrbEVEY29rQXIwUzN1IiwibWFjIjoiMzg1ZjZkOThlNjNiNGIwMmI2MTA0ZGQyOGQ0YTRlYzEzMDFkZjY5YWU1NTczN2NmNWI1Nzc0NzliZWZhYTk3ZSJ9; wallhaven_session=eyJpdiI6IndwUGlDQUdPemtUdURMdUJJanczQ2c9PSIsInZhbHVlIjoiYmJiWnNnNitDMEM5ZmlWbVAxNE5FRjIrQW9WQnFCRGtUakpFSUdvQ0pRYkM5aFwvb281UlY3Mng0ajNVT3lKMkkiLCJtYWMiOiIxZjk2NTFkNWMzYjU4YTlkM2ZmMWM0YmUyY2NiMDM5ZDYwYzViMTQ4NGNjMGY2YmYxMDM2ZjhlNzk0MjVlODZiIn0%3D',
 }
 
 # 创建爬虫目录
@@ -74,7 +76,7 @@ def main():
 
     global current_page
 
-    print(f'Task from page: {current_page}')
+    print(f'Spide from page: {current_page}')
 
     while current_page <= final_page:
 
@@ -87,9 +89,9 @@ def main():
 
         current_page += 1
 
-        time.sleep(5)
+        time.sleep(3)
 
-    print('Task done!!!')
+    print('Spide done!!!')
 
 if __name__ == '__main__':
     main()    
