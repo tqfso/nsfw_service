@@ -6,7 +6,7 @@ import os
 import time
 import spider
 
-print(os.getcwd())
+print(f'current path: {os.getcwd()}')
 
 # 创建图片下载目录
 path = "data/images"

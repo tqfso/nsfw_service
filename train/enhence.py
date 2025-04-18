@@ -2,11 +2,14 @@
 # 数据增强，违规图片和正常图片数量保持差不多
 
 import os
+import shutil
 import download
 import spider
 from PIL import Image
 
+# 创建增强图片目录，确保文件目录为空
 path = "data/enhences"
+shutil.rmtree(path)
 os.makedirs(path, exist_ok=True)
 
 # 获取不同等级的图片数量
@@ -32,7 +35,7 @@ def main():
     stats = stats_levels()
     print(f'dataset dis: {stats}')
 
-    for file in os.listdir('pic'):
+    for file in os.listdir(download.path):
         if 'copy' in file or 'flip' in file:
             continue
         if file[0] == '0':
