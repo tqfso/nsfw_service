@@ -1,3 +1,6 @@
+
+# 爬图片数据并标注: 0级、1级、2级。默认下载1000页
+
 import time
 import requests
 import re
@@ -7,7 +10,7 @@ import sys
 print(os.getcwd())
 
 host = 'https://wallhaven.cc/search'
-spider_path = "data"
+file_name = "data/wallhaven.csv"
 current_page = 2
 final_page = 1000
 
@@ -20,7 +23,7 @@ headers = {
 }
 
 # 创建爬虫目录
-os.makedirs(spider_path, exist_ok=True)
+os.makedirs(os.path.dirname(file_name), exist_ok=True)
 
 def handle_page_text(text):
     figures = re.findall('<figure.*?</figure>', text)
@@ -45,7 +48,7 @@ def handle_page_text(text):
 
         line += re.findall('data-src="(.*?)"', f)[0]
 
-        with open(f'{spider_path}/wallhaven.csv', 'a') as f:
+        with open(file_name, 'a') as f:
             f.write(line + '\n')
     
 def fetch_page_text(page):
@@ -82,14 +85,14 @@ def main():
 
         if spide(current_page) == False:
             print(f'Page{current_page} Failure')
-            time.sleep(60)
+            time.sleep(30)
             continue
                 
         print(f'Page{current_page} Success')
 
         current_page += 1
 
-        time.sleep(3)
+        time.sleep(1)
 
     print('Spide done!!!')
 

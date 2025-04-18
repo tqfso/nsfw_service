@@ -1,12 +1,16 @@
+
+# 下载爬到的图片，保存到本地的文件名规则：级别_类型_XX
+
 import requests
 import os
 import time
+import spider
 
 print(os.getcwd())
 
 # 创建图片下载目录
-download_path = "data/images"
-os.makedirs(download_path, exist_ok=True)
+path = "data/images"
+os.makedirs(path, exist_ok=True)
 
 def fetch_image_content(url):
     try:
@@ -17,28 +21,28 @@ def fetch_image_content(url):
     return content
 
 def main():
-    with open('data/wallhaven.csv') as f:
+    with open(spider.file_name) as f:
 
         lines = f.readlines()
-        for line in lines:
+        for index, line in enumerate(lines):
             parts = line.strip().split(',')
             levels = parts[0]
             types = parts[1]
             url = parts[2]
 
             fname = url.replace('https://th.wallhaven.cc/orig/', '').replace('/', '_')
-            fpath = f'{download_path}/{levels}_{types}_{fname}'
-
-            print(f'Download:{fname}')
+            fpath = f'{path}/{levels}_{types}_{fname}'            
 
             # 文件存在则跳过
             if os.path.exists(fpath):
                 continue
 
+            print(f'Download_{index}: {fname}')
+
             content = fetch_image_content(url)
             if content == None:
                 print("Failure")
-                time.sleep(60)
+                time.sleep(30)
                 continue
             else:
                 print("Success")            
@@ -46,7 +50,7 @@ def main():
             with open(fpath, 'wb') as f:
                 f.write(content)
             
-            time.sleep(3)
+            time.sleep(1)
 
 if __name__ == '__main__':
     main()
