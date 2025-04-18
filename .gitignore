@@ -176,5 +176,7 @@ cython_debug/
 # Self define
 /.vscode
 /temp
-/data
+/data/frames
+/data/images
+/data/download
 /model
