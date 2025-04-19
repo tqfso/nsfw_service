@@ -31,7 +31,11 @@ def main():
             url = parts[2]
 
             fname = url.replace('https://th.wallhaven.cc/orig/', '').replace('/', '_')
-            fpath = f'{path}/{levels}_{types}_{fname}'            
+            fpath = f'{path}/{levels}_{types}_{fname}'
+
+            # 只下载不合规图片
+            # if levels == '0':
+            #     continue
 
             # 文件存在则跳过
             if os.path.exists(fpath):

@@ -11,8 +11,8 @@ print(os.getcwd())
 
 host = 'https://wallhaven.cc/search'
 file_name = "data/wallhaven.csv"
-current_page = 2
-final_page = 1000
+current_page = 4102
+final_page = 5000
 
 if len(sys.argv) >= 2:
     current_page = int(sys.argv[1])
