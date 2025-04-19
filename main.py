@@ -4,11 +4,13 @@ import hashlib
 
 from flask import Flask, request, jsonify
 from falconsai import Model
+# from model import Model
 
 app = Flask(__name__)
 model = Model()
-file_path = os.getenv("FILE_PATH","./data")
-model_path = os.getenv("MODEL_PATH","./model/Falconsai")
+file_path = os.getenv("FILE_PATH","temp")
+model_path = os.getenv("MODEL_PATH","model/Falconsai")
+# model_path = os.getenv("MODEL_PATH","./model/zdan")
 
 @app.route('/detect/image', methods=['POST'])
 def image_handler():
@@ -19,15 +21,11 @@ def image_handler():
         if os.path.exists(filepath) == False:
             raise Exception("file not found")
         
-        result = model.process(filepath)
-        response = {
-            'stats': result,
-        }
+        response = model.process(filepath)
         return jsonify(response)
 
     except Exception as e:
         response = {
-            'stats': "failed",
             'message': str(e)
         }
         return jsonify(response)    
@@ -57,7 +55,7 @@ def video_handler():
         # 计算抽帧间隔：至少1秒抽1帧，最多抽64帧
         frame_interval = max(int(fps), frame_count // 64)
         frame_indices = list(range(0, frame_count, frame_interval))[:64]
-        detail = {"nsfw": 0, "normal": 0, "unknown": 0}
+        detail = {"nsfw": 0, "normal": 0}
 
         # 使用文件名 hash 作为帧图文件名前缀
         file_hash = hashlib.md5(filepath.encode('utf-8')).hexdigest()
@@ -75,7 +73,7 @@ def video_handler():
             temp_path = f"{frame_dir}/temp_{file_hash}_{frame_id}.jpg"
             cv2.imwrite(temp_path, frame)
 
-            label = model.process(temp_path)
+            label = model.process(temp_path)['label']
             detail[label] = detail.get(label, 0) + 1
 
             if os.path.exists(temp_path):
@@ -84,15 +82,14 @@ def video_handler():
 
         cap.release()
 
-        result = max(detail, key=detail.get)
+        label = max(detail, key=detail.get)
         response = {
-            'stats': result,
+            'label': label,
             'detail': detail
         }
         return jsonify(response)
     except Exception as e:
         response = {
-            'stats': "failed",
             'message': str(e)
         }
         return jsonify(response)    
@@ -101,8 +98,9 @@ def video_handler():
         print(f'{filename}: {response}')
 
 def main():
-    print(f'Start Service, Root Path: {file_path}')
 
+    print(f'File Path: {file_path}')
+    
     if model.load(model_path) == False:
         return
     app.run(host="0.0.0.0", port=5000, debug=True)

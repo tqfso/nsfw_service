@@ -29,10 +29,13 @@ class Model:
         
         img = Image.open(filename)
 
-        # [{'label': 'normal', 'score': 0.9997023940086365}, {'label': 'nsfw', 'score': 0.00029755846480838954}]
+        result = {}
         out = self.classifier(img)
-        for result in out:
-            if result['score'] > 0.8:
-                return result['label']
-        return 'unknown'
+        for data in out:
+            if data['score'] >= 0.5:
+                result['label'] = data['label']
+                result['score'] = data['score']
+                break
+
+        return result
         
