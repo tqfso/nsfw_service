@@ -11,11 +11,11 @@ print(os.getcwd())
 
 host = 'https://wallhaven.cc/search'
 file_name = "data/wallhaven.csv"
-current_page = 4102
+from_page = 2
 final_page = 5000
 
 if len(sys.argv) >= 2:
-    current_page = int(sys.argv[1])
+    from_page = int(sys.argv[1])
 
 headers = {
     'accept': 'text/html, */*; q=0.01',
@@ -77,20 +77,19 @@ def spide(page) -> bool:
 
 def main():
 
-    global current_page
+    global from_page
 
-    print(f'Spide from page: {current_page}')
+    print(f'Spide from page: {from_page}')
 
-    while current_page <= final_page:
-
-        if spide(current_page) == False:
-            print(f'Page{current_page} Failure')
+    while from_page <= final_page:
+        if spide(from_page) == False:
+            print(f'Page{from_page} Failure')
             time.sleep(30)
             continue
                 
-        print(f'Page{current_page} Success')
+        print(f'Page{from_page} Success')
 
-        current_page += 1
+        from_page += 1
 
         time.sleep(1)
 
