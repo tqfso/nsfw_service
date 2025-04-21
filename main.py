@@ -3,14 +3,14 @@ import cv2
 import hashlib
 
 from flask import Flask, request, jsonify
-from falconsai import Model
-# from model import Model
+# from falconsai import Model
+from model import Model
 
 app = Flask(__name__)
 model = Model()
 file_path = os.getenv("FILE_PATH","temp")
-model_path = os.getenv("MODEL_PATH","model/Falconsai")
-# model_path = os.getenv("MODEL_PATH","./model/zdan")
+# model_path = os.getenv("MODEL_PATH","model/Falconsai")
+model_path = os.getenv("MODEL_PATH","./model/zdan")
 
 @app.route('/detect/image', methods=['POST'])
 def image_handler():
@@ -100,6 +100,7 @@ def video_handler():
 def main():
 
     print(f'File Path: {file_path}')
+    print(f'Model Path: {model_path}')    
     
     if model.load(model_path) == False:
         return
